@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Clock and Countdown</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: lightblue;
+            margin-top: 100px;
+        }
+
+        .box {
+            background-color: white;
+            width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: navy;
+        }
+
+        #clock, #timer {
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h1>Digital Clock</h1>
+
+        <p id="clock"></p>
+
+    </div>
+
+
+    <div class="box">
+
+        <h1>Exam Countdown</h1>
+
+        <p id="timer"></p>
+
+    </div>
+
+
+    <script>
+
+        // Digital clock
+        function showClock() {
+
+            let now = new Date();
+
+            let time = now.toLocaleTimeString();
+
+            document.getElementById("clock").innerHTML = time;
+        }
+
+
+        // Update clock every second
+        setInterval(showClock, 1000);
+
+        showClock();
+
+
+        // Exam date
+        let examDate = new Date("December 20, 2026 09:00:00");
+
+
+        // Countdown function
+        function countdown() {
+
+            let now = new Date();
+
+            let difference = examDate - now;
+
+
+            let days = Math.floor(
+                difference / (1000 * 60 * 60 * 24)
+            );
+
+            let hours = Math.floor(
+                (difference / (1000 * 60 * 60)) % 24
+            );
+
+            let minutes = Math.floor(
+                (difference / (1000 * 60)) % 60
+            );
+
+            let seconds = Math.floor(
+                (difference / 1000) % 60
+            );
+
+
+            document.getElementById("timer").innerHTML =
+                days + " Days " +
+                hours + " Hours " +
+                minutes + " Minutes " +
+                seconds + " Seconds";
+        }
+
+
+        setInterval(countdown, 1000);
+
+        countdown();
+
+    </script>
+
+</body>
+</html>
