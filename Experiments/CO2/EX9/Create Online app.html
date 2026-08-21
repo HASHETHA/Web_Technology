@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Quiz</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        .quiz {
+            width: 400px;
+            margin: 50px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz">
+
+        <h2>Online Quiz</h2>
+
+        <p id="question"></p>
+
+        <div id="options"></div>
+
+        <p id="score"></p>
+
+    </div>
+
+
+    <script>
+
+        // Array of objects
+        let questions = [
+
+            {
+                question: "Which language is used for web pages?",
+                options: ["HTML", "Python", "Java", "C"],
+                answer: "HTML"
+            },
+
+            {
+                question: "Which language is used for styling?",
+                options: ["HTML", "CSS", "Java", "Python"],
+                answer: "CSS"
+            },
+
+            {
+                question: "Which language adds interactivity?",
+                options: ["HTML", "CSS", "JavaScript", "SQL"],
+                answer: "JavaScript"
+            }
+
+        ];
+
+
+        let current = 0;
+        let score = 0;
+
+
+        // Display question
+        function showQuestion() {
+
+            document.getElementById("question").innerHTML =
+                questions[current].question;
+
+            let options = document.getElementById("options");
+
+            options.innerHTML = "";
+
+
+            for (let i = 0; i < questions[current].options.length; i++) {
+
+                let button = document.createElement("button");
+
+                button.innerHTML =
+                    questions[current].options[i];
+
+                button.onclick = function() {
+
+                    checkAnswer(
+                        questions[current].options[i]
+                    );
+
+                };
+
+                options.appendChild(button);
+            }
+        }
+
+
+        // Check answer
+        function checkAnswer(answer) {
+
+            if (answer == questions[current].answer) {
+                score++;
+            }
+
+            current++;
+
+
+            if (current < questions.length) {
+                showQuestion();
+            }
+            else {
+
+                document.getElementById("question").innerHTML =
+                    "Quiz Completed!";
+
+                document.getElementById("options").innerHTML = "";
+
+                document.getElementById("score").innerHTML =
+                    "Your Score: " + score + " / " + questions.length;
+            }
+        }
+
+
+        showQuestion();
+
+    </script>
+
+</body>
+</html>
