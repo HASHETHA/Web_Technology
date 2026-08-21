@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SIMATS Student Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 400px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            background-color: #333333;
+            color: white;
+            cursor: pointer;
+        }
+
+        #message {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>SIMATS Student Registration Form</h1>
+
+        <form id="registrationForm">
+
+            <label for="studentName">Student Name:</label>
+            <input type="text"
+                   id="studentName"
+                   placeholder="Enter your name">
+
+            <label for="registerNumber">Register Number:</label>
+            <input type="text"
+                   id="registerNumber"
+                   placeholder="Enter register number">
+
+            <label for="email">Email:</label>
+            <input type="text"
+                   id="email"
+                   placeholder="Enter your email">
+
+            <label for="phone">Phone Number:</label>
+            <input type="text"
+                   id="phone"
+                   placeholder="Enter 10-digit phone number">
+
+            <label for="department">Department:</label>
+
+            <select id="department">
+                <option value="">Select Department</option>
+                <option value="IT">Information Technology</option>
+                <option value="CSE">Computer Science</option>
+                <option value="AI">Artificial Intelligence</option>
+            </select>
+
+            <label for="password">Password:</label>
+            <input type="password"
+                   id="password"
+                   placeholder="Enter password">
+
+            <button type="submit">Register</button>
+
+        </form>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <script>
+
+        document.getElementById("registrationForm")
+            .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById("studentName").value;
+
+            const registerNumber =
+                document.getElementById("registerNumber").value;
+
+            const email =
+                document.getElementById("email").value;
+
+            const phone =
+                document.getElementById("phone").value;
+
+            const department =
+                document.getElementById("department").value;
+
+            const password =
+                document.getElementById("password").value;
+
+            const message =
+                document.getElementById("message");
+
+            const phonePattern =
+                /^[0-9]{10}$/;
+
+
+            if (
+                name === "" ||
+                registerNumber === "" ||
+                email === "" ||
+                phone === "" ||
+                department === "" ||
+                password === ""
+            ) {
+                message.textContent =
+                    "Please complete all fields.";
+
+                message.style.color = "red";
+
+            }
+
+
+            else if (!phonePattern.test(phone)) {
+
+                message.textContent =
+                    "Please enter a valid 10-digit phone number.";
+
+                message.style.color = "red";
+
+            }
+
+            else if (password.length < 6) {
+
+                message.textContent =
+                    "Password must contain at least 6 characters.";
+
+                message.style.color = "red";
+
+            }
+
+            else {
+
+                message.textContent =
+                    "Registration successful!";
+
+                message.style.color = "green";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
