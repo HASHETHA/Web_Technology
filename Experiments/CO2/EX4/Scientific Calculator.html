@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scientific Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: lightblue;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .calculator {
+            width: 300px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        #display {
+            width: 90%;
+            height: 40px;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <h2>Scientific Calculator</h2>
+
+        <input type="text" id="display" value="0" readonly>
+
+        <div class="buttons">
+
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="calculate('sqrt')">√</button>
+            <button onclick="calculate('sin')">sin</button>
+            <button onclick="calculate('cos')">cos</button>
+
+            <button onclick="calculate('tan')">tan</button>
+            <button onclick="calculate('log')">log</button>
+            <button onclick="calculate('square')">x²</button>
+            <button onclick="add('(')">(</button>
+
+            <button onclick="add('7')">7</button>
+            <button onclick="add('8')">8</button>
+            <button onclick="add('9')">9</button>
+            <button onclick="add('/')">÷</button>
+
+            <button onclick="add('4')">4</button>
+            <button onclick="add('5')">5</button>
+            <button onclick="add('6')">6</button>
+            <button onclick="add('*')">×</button>
+
+            <button onclick="add('1')">1</button>
+            <button onclick="add('2')">2</button>
+            <button onclick="add('3')">3</button>
+            <button onclick="add('-')">−</button>
+
+            <button onclick="add('0')">0</button>
+            <button onclick="add('.')">.</button>
+            <button onclick="calculate('answer')">=</button>
+            <button onclick="add('+')">+</button>
+
+        </div>
+    </div>
+
+
+    <script>
+
+        // Get the display
+        let display = document.getElementById("display");
+
+
+        // Add numbers and operators
+        function add(value) {
+
+            if (display.value == "0") {
+                display.value = value;
+            }
+            else {
+                display.value = display.value + value;
+            }
+        }
+
+
+        // Clear calculator
+        function clearDisplay() {
+            display.value = "0";
+        }
+
+
+        // Calculate result
+        function calculate(type) {
+
+            let number = Number(display.value);
+
+            if (type == "sqrt") {
+                display.value = Math.sqrt(number);
+            }
+
+            else if (type == "square") {
+                display.value = Math.pow(number, 2);
+            }
+
+            else if (type == "sin") {
+                display.value = Math.sin(number * Math.PI / 180);
+            }
+
+            else if (type == "cos") {
+                display.value = Math.cos(number * Math.PI / 180);
+            }
+
+            else if (type == "tan") {
+                display.value = Math.tan(number * Math.PI / 180);
+            }
+
+            else if (type == "log") {
+                display.value = Math.log10(number);
+            }
+
+            else if (type == "answer") {
+
+                try {
+                    display.value = eval(display.value);
+                }
+
+                catch {
+                    display.value = "Error";
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>
