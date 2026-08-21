@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Website</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+
+        header {
+            background-color: navy;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+        }
+
+        nav a:hover {
+            background-color: gray;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .box {
+            padding: 20px;
+            border: 2px solid navy;
+            margin: 10px;
+        }
+
+        .courses {
+            display: flex;
+            gap: 15px;
+        }
+
+        .course {
+            background-color: lightblue;
+            padding: 20px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .notice {
+            position: relative;
+            background-color: lightyellow;
+            padding: 15px;
+        }
+
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+
+            nav {
+                flex-direction: column;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .courses {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>SIMATS College of Engineering</h1>
+        <p>Welcome to our College</p>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Courses</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <main>
+
+        <div class="container">
+
+            <section class="box">
+                <h2>About Our College</h2>
+                <p>
+                    SIMATS College provides quality education
+                    and modern learning facilities.
+                </p>
+            </section>
+
+            <aside class="box">
+                <h2>Notice</h2>
+                <p class="notice">
+                    Semester exams begin next month.
+                </p>
+            </aside>
+
+        </div>
+
+        <section class="box">
+
+            <h2>Our Courses</h2>
+
+            <div class="courses">
+
+                <div class="course">
+                    <h3>B.Tech IT</h3>
+                    <p>Information Technology</p>
+                </div>
+
+                <div class="course">
+                    <h3>B.Tech CSE</h3>
+                    <p>Computer Science</p>
+                </div>
+
+                <div class="course">
+                    <h3>B.Tech ECE</h3>
+                    <p>Electronics</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
