@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+            color: #1e293b;
+        }
+
+        /* Header */
+        header {
+            background: #1e3a8a;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: white;
+            color: #1e3a8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo h1 {
+            font-size: 21px;
+        }
+
+        .logo p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 3px;
+        }
+
+        .header-status {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* Main */
+        main {
+            width: 90%;
+            max-width: 1050px;
+            margin: 45px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title h2 {
+            font-size: 32px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #64748b;
+        }
+
+        /* Layout */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .card-title .number {
+            width: 32px;
+            height: 32px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .card-title h3 {
+            font-size: 19px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px #dbeafe;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Button */
+        #displayBtn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+
+        #displayBtn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* Empty Profile */
+        .empty-profile {
+            text-align: center;
+            padding: 55px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .empty-profile h4 {
+            color: #475569;
+            margin-bottom: 7px;
+        }
+
+        /* Generated Profile */
+        .profile {
+            border: 1px solid #bfdbfe;
+            border-radius: 14px;
+            overflow: hidden;
+            animation: showProfile 0.35s ease;
+        }
+
+        @keyframes showProfile {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            background: #eff6ff;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .profile-header h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .profile-header p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .profile-details {
+            padding: 22px;
+        }
+
+        .detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail:last-child {
+            border-bottom: none;
+        }
+
+        .detail span:first-child {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .detail span:last-child {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .status {
+            color: #15803d !important;
+        }
+
+        #removeBtn {
+            width: 100%;
+            padding: 11px;
+            margin-top: 15px;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            background: #fef2f2;
+            color: #dc2626;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #removeBtn:hover {
+            background: #fee2e2;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 750px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .header-status {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🎓
+            </div>
+
+            <div>
+                <h1>Student Portal</h1>
+                <p>Department of Computer Applications</p>
+            </div>
+
+        </div>
+
+        <div class="header-status">
+            ● Registration System
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <div class="page-title">
+
+            <h2>Student Registration</h2>
+
+            <p>
+                Enter your details to generate your student profile
+            </p>
+
+        </div>
+
+
+        <div class="content">
+
+            <!-- REGISTRATION FORM -->
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div class="number">
+                        01
+                    </div>
+
+                    <h3>Registration Details</h3>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="regNo">
+                        Register Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="regNo"
+                        placeholder="Enter register number"
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <select id="department">
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="Computer Science">
+                                Computer Science
+                            </option>
+
+                            <option value="Information Technology">
+                                Information Technology
+                            </option>
+
+                            <option value="Computer Applications">
+                                Computer Applications
+                            </option>
+
+                            <option value="Electronics">
+                                Electronics
+                            </option>
+
+                            <option value="Mechanical">
+                                Mechanical
+                            </option>
+
+                            <option value="Civil">
+                                Civil
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="year">
+                            Year of Study
+                        </label>
+
+                        <select id="year">
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option value="1st Year">
+                                1st Year
+                            </option>
+
+                            <option value="2nd Year">
+                                2nd Year
+                            </option>
+
+                            <option value="3rd Year">
+                                3rd Year
+                            </option>
+
+                            <option value="4th Year">
+                                4th Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button id="displayBtn">
+                    Create Student Profile
+                </button>
+
+            </div>
+
+
+            <!-- PROFILE SECTION -->
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div class="number">
+                        02
+                    </div>
+
+                    <h3>Student Preview</h3>
+
+                </div>
+
+
+                <!-- Profile will be inserted here -->
+                <div id="profileContainer">
+
+                    <div class="empty-profile">
+
+                        <div class="empty-icon">
+                            👤
+                        </div>
+
+                        <h4>No Profile Generated</h4>
+
+                        <p>
+                            Fill in the registration details
+                            and click "Create Student Profile".
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        Student Registration Portal &copy; 2026
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        // Select the Display button using DOM
+        const displayBtn =
+            document.getElementById("displayBtn");
+
+
+        // Add click event to Display button
+        displayBtn.addEventListener("click", function () {
+
+
+            // Read values from the form
+            const name =
+                document.getElementById("name").value.trim();
+
+            const regNo =
+                document.getElementById("regNo").value.trim();
+
+            const department =
+                document.getElementById("department").value;
+
+            const year =
+                document.getElementById("year").value;
+
+
+            // Validate input
+            if (
+                name === "" ||
+                regNo === "" ||
+                department === "" ||
+                year === ""
+            ) {
+
+                alert("Please fill in all the registration details.");
+
+                return;
+            }
+
+
+            // Get profile container
+            const profileContainer =
+                document.getElementById("profileContainer");
+
+
+            // Remove previous profile
+            profileContainer.innerHTML = "";
+
+
+            // Create profile main element
+            const profile =
+                document.createElement("div");
+
+
+            // Add CSS class
+            profile.classList.add("profile");
+
+
+            // Create profile header
+            const profileHeader =
+                document.createElement("div");
+
+            profileHeader.classList.add("profile-header");
+
+
+            // Create avatar
+            const avatar =
+                document.createElement("div");
+
+            avatar.classList.add("avatar");
+
+
+            // Generate initials
+            const nameParts = name.split(" ");
+
+            let initials = nameParts[0].charAt(0);
+
+            if (nameParts.length > 1) {
+                initials +=
+                    nameParts[nameParts.length - 1].charAt(0);
+            }
+
+            avatar.textContent =
+                initials.toUpperCase();
+
+
+            // Create student name section
+            const nameSection =
+                document.createElement("div");
+
+
+            const studentName =
+                document.createElement("h3");
+
+            studentName.textContent = name;
+
+
+            const studentType =
+                document.createElement("p");
+
+            studentType.textContent =
+                "Registered Student";
+
+
+            nameSection.appendChild(studentName);
+            nameSection.appendChild(studentType);
+
+
+            // Add avatar and name section
+            profileHeader.appendChild(avatar);
+            profileHeader.appendChild(nameSection);
+
+
+            // Create profile details section
+            const profileDetails =
+                document.createElement("div");
+
+            profileDetails.classList.add("profile-details");
+
+
+            // Register number
+            const registerDetail =
+                document.createElement("div");
+
+            registerDetail.classList.add("detail");
+
+
+            const registerLabel =
+                document.createElement("span");
+
+            registerLabel.textContent =
+                "Register Number";
+
+
+            const registerValue =
+                document.createElement("span");
+
+            registerValue.textContent = regNo;
+
+
+            registerDetail.appendChild(registerLabel);
+            registerDetail.appendChild(registerValue);
+
+
+            // Department
+            const departmentDetail =
+                document.createElement("div");
+
+            departmentDetail.classList.add("detail");
+
+
+            const departmentLabel =
+                document.createElement("span");
+
+            departmentLabel.textContent =
+                "Department";
+
+
+            const departmentValue =
+                document.createElement("span");
+
+            departmentValue.textContent = department;
+
+
+            departmentDetail.appendChild(departmentLabel);
+            departmentDetail.appendChild(departmentValue);
+
+
+            // Year
+            const yearDetail =
+                document.createElement("div");
+
+            yearDetail.classList.add("detail");
+
+
+            const yearLabel =
+                document.createElement("span");
+
+            yearLabel.textContent =
+                "Year of Study";
+
+
+            const yearValue =
+                document.createElement("span");
+
+            yearValue.textContent = year;
+
+
+            yearDetail.appendChild(yearLabel);
+            yearDetail.appendChild(yearValue);
+
+
+            // Status
+            const statusDetail =
+                document.createElement("div");
+
+            statusDetail.classList.add("detail");
+
+
+            const statusLabel =
+                document.createElement("span");
+
+            statusLabel.textContent =
+                "Status";
+
+
+            const statusValue =
+                document.createElement("span");
+
+            statusValue.textContent =
+                "✓ Registered";
+
+            statusValue.classList.add("status");
+
+
+            statusDetail.appendChild(statusLabel);
+            statusDetail.appendChild(statusValue);
+
+
+            // Add details to profile
+            profileDetails.appendChild(registerDetail);
+            profileDetails.appendChild(departmentDetail);
+            profileDetails.appendChild(yearDetail);
+            profileDetails.appendChild(statusDetail);
+
+
+            // Create Remove button
+            const removeBtn =
+                document.createElement("button");
+
+            removeBtn.id = "removeBtn";
+
+            removeBtn.textContent =
+                "Remove Profile";
+
+
+            // Add details and button
+            profileDetails.appendChild(removeBtn);
+
+
+            // Add header and details to profile
+            profile.appendChild(profileHeader);
+            profile.appendChild(profileDetails);
+
+
+            // Add profile to webpage
+            profileContainer.appendChild(profile);
+
+
+            // Remove profile button event
+            removeBtn.addEventListener("click", function () {
+
+                profile.remove();
+
+                // Show empty message again
+                profileContainer.innerHTML = `
+                    <div class="empty-profile">
+                        <div class="empty-icon">👤</div>
+                        <h4>No Profile Generated</h4>
+                        <p>
+                            Fill in the registration details
+                            and click "Create Student Profile".
+                        </p>
+                    </div>
+                `;
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
