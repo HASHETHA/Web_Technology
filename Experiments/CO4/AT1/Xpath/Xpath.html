@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>XPath Course Analysis</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        select, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 15px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #expression {
+            background: #eee;
+            padding: 12px;
+            margin-top: 20px;
+            font-family: monospace;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>XPath Course Analysis</h1>
+
+    <label>Select Question:</label>
+
+    <select id="question">
+        <option value="a"> - All course records</option>
+        <option value="b"> - Names of all courses</option>
+        <option value="c"> - More than 50 students</option>
+        <option value="d"> - Exactly 4 credits</option>
+        <option value="e"> - Theory courses</option>
+        <option value="f"> - Theory courses with more than 50 students</option>
+        <option value="g"> - Faculty with at least 4 credits</option>
+        <option value="h"> - Course C104</option>
+        <option value="i"> - First course</option>
+        <option value="j"> - Last course</option>
+    </select>
+
+    <button onclick="runXPath()">Check XPath</button>
+
+    <div id="expression">
+        XPath expression will appear here
+    </div>
+
+    <div id="result">
+        Result will appear here
+    </div>
+
+</div>
+
+<script>
+
+let xmlDoc;
+
+const expressions = {
+
+    a: "/courses/course",
+
+    b: "/courses/course/name",
+
+    c: "/courses/course[students > 50]",
+
+    d: "/courses/course[credits = 4]",
+
+    e: "/courses/course[type = 'Theory']",
+
+    f: "/courses/course[type = 'Theory' and students > 50]/name",
+
+    g: "/courses/course[credits >= 4]/faculty",
+
+    h: "/courses/course[@id = 'C104']",
+
+    i: "/courses/course[1]",
+
+    j: "/courses/course[last()]"
+};
+
+function loadXML() {
+
+    fetch("course.xml")
+        .then(response => response.text())
+        .then(data => {
+
+            const parser = new DOMParser();
+
+            xmlDoc = parser.parseFromString(data, "text/xml");
+
+            console.log("XML loaded successfully");
+
+        })
+        .catch(error => {
+
+            document.getElementById("result").innerHTML =
+                "Error loading course.xml";
+
+        });
+}
+
+function runXPath() {
+
+    const question =
+        document.getElementById("question").value;
+
+    const expression =
+        expressions[question];
+
+    document.getElementById("expression").innerHTML =
+        "<strong>XPath:</strong> " + expression;
+
+    const result =
+        xmlDoc.evaluate(
+            expression,
+            xmlDoc,
+            null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+            null
+        );
+
+    let output = "";
+
+    for (let i = 0; i < result.snapshotLength; i++) {
+
+        const node = result.snapshotItem(i);
+
+        if (node.nodeType === 1 &&
+            node.tagName === "course") {
+
+            output += `
+                <table>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Faculty</th>
+                        <th>Students</th>
+                        <th>Credits</th>
+                        <th>Type</th>
+                    </tr>
+                    <tr>
+                        <td>${node.getAttribute("id")}</td>
+                        <td>${node.querySelector("code").textContent}</td>
+                        <td>${node.querySelector("name").textContent}</td>
+                        <td>${node.querySelector("faculty").textContent}</td>
+                        <td>${node.querySelector("students").textContent}</td>
+                        <td>${node.querySelector("credits").textContent}</td>
+                        <td>${node.querySelector("type").textContent}</td>
+                    </tr>
+                </table>
+            `;
+
+        } else {
+
+            output += "<p>" + node.textContent + "</p>";
+
+        }
+    }
+
+    if (output === "") {
+
+        output = "No matching records found.";
+
+    }
+
+    document.getElementById("result").innerHTML = output;
+}
+
+loadXML();
+
+</script>
+
+</body>
+</html>
